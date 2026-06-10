@@ -1,1 +1,1 @@
-# DataScienceProj2
+Проект с выполнением задач по курсу Data Science-2.
