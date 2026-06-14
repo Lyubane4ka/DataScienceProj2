@@ -113,3 +113,42 @@ def create_visualizations_uber(df, target_column="Close"):
     plt.tight_layout()
     plt.show()
     print("-> Статические графики тренда и объемов выведены на экран.")
+
+
+def plot_stock_predictions(dates, y_true, lasso_predictions, arima_predictions, r2_l, r2_a):
+    """
+    Строит график сравнения реальных цен акций Uber и прогнозов моделей Lasso и ARIMA.
+    Автоматически выравнивает длины массивов по минимальному размеру во избежание ValueError.
+    """
+    # Находим минимальную общую длину всех массивов данных
+    min_len = min(len(dates), len(y_true), len(lasso_predictions), len(arima_predictions))
+
+    # Срезаем каждый массив с конца, чтобы они гарантированно совпадали по размеру
+    dates = dates[-min_len:]
+    y_true = y_true[-min_len:]
+    lasso_predictions = lasso_predictions[-min_len:]
+    arima_predictions = arima_predictions[-min_len:]
+
+    plt.figure(figsize=(14, 7))
+
+    # Отображение графиков
+    plt.plot(dates, y_true, label='Реальная цена (Actual)', color='#2c3e50', linewidth=2)
+    plt.plot(dates, lasso_predictions, label=f'Прогноз LASSO (R²: {r2_l:.4f})', color='#e74c3c', linestyle='--',
+             alpha=0.85)
+    plt.plot(dates, arima_predictions, label=f'Прогноз ARIMA (R²: {r2_a:.4f})', color='#3498db', linestyle=':',
+             alpha=0.85)
+
+    # Оформление осей и заголовков
+    plt.title('Сравнение прогнозов моделей Lasso и ARIMA на данных Uber', fontsize=14, fontweight='bold', pad=15)
+    plt.xlabel('Дата (Date)', fontsize=12)
+    plt.ylabel('Цена акции в USD ($)', fontsize=12)
+
+    # Сетка и легенда
+    plt.grid(True, linestyle='--', alpha=0.5)
+    plt.legend(fontsize=11, loc='upper left', frameon=True, facecolor='white', edgecolor='none')
+
+    # Оптимизация отображения дат на оси X
+    plt.gcf().autofmt_xdate()
+    plt.tight_layout()
+
+    plt.show()
