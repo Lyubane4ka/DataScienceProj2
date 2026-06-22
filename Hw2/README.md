@@ -1,17 +1,9 @@
-image_captioning/
+lstm_autoencoder_project/
 │
-├── data/
-│   ├── dataset.py          # Классы Vocabulary и FlickrDataset
-│   
-│
-├── models/
-│   ├── encoder.py          # CNNEncoder на базе ResNet50
-│   ├── decoder.py          # Transformer-декодер и Positional Encoding
-│   └── captioner.py        # Общий класс-контейнер ImageCaptioner
-│
-├── utils/
-│   └── visualization.py    # Функции отрисовки картинок и графиков Loss
-│
-├── Hw2.ipynb               # Скрипт запуска обучения
-└── inference.py            # Скрипт генерации описания для новых картинок
-
+├── config.py              # Конфигурация, гиперпараметры и пути
+├── preprocessor.py        # Класс для подготовки временных рядов
+├── model.py               # Архитектура нейросети LSTM
+├── pipeline.py            # Менеджер обучения и инференса
+├── detector.py            # Логика поиска аномалий и анализа ошибок
+├── visualizer.py          # НОВЫЙ: Графики потерь, аномалий и восстановления
+└── Hw2.ipynb              # Точка входа для запуска всего пайплайна
